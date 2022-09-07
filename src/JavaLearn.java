@@ -4,12 +4,23 @@ public class JavaLearn {
     }
 
     public void variables() {
+        //String//
         String text = "This is a String";
+
+        //Integer with declaring example//
         int num = 1;
+        //or: //
+        int num2;
+        num2 = 12;
+
+
         //Float and doubles are almost identical but store different lengths.//
         float decimal = 1.0F;
         double decimal2 = 1.0;
         boolean bool = true;
+        char character = 1;
+        long number = 1000000L;
+
         // Array format: Type[length] var_name = {items}//
         int[] array = {1, 2, 3, 4};
         int[][] double_array = {{1, 2 ,3 ,4}, {5, 6, 7}};

@@ -1,58 +1,67 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class H2O {
-    public static class drawmolecule extends JPanel {
-        public int x_val;
-        public int y_val;
-        @Override
-        public void paint(Graphics g) {
-            int x_value = 40 * 3;
-            int y_value = 50 * 3;
-            int width = 60 * 2;
-            int height = 60 * 2;
+public class H2O extends JFrame implements ActionListener {
 
-            //Draws the Oxygen.//
-            g.setColor(Color.BLUE);
-            g.fillOval(x_value, y_value, width, height);
-
-            //Draws the Hydrogen.//
-            g.setColor(Color.red);
-            g.fillOval(x_value + 160, y_value + 50 * 3, width - 12 * 3, height - 12 * 3);
-            g.fillOval(x_value + 160, y_value - 40 * 3, width - 12 * 3, height - 12 * 3);
-
-            //Draws lines between the atoms.//
-            g.setColor(Color.BLACK);
-            g.drawLine(x_value, y_value, x_value + 110, y_value + 40);
-            g.drawLine(x_value, y_value, x_value + 110, y_value - 40);
-        }
-    }
-
+    JTextField xfield;
+    JTextField yfield;
+    JButton button;
+    JPanel panel;
 
     public static void main(String[] args) {
-        JFrame root = new JFrame("Watermolecule Nick");
-        root.setSize(800, 670);
+        H2O frame = new H2O();
+        frame.setTitle("Watermolecule Nick");
+        frame.setSize(600,600);
+        frame.createGUI();
+        frame.setVisible(true);
+    }
 
-        JPanel back_panel = new JPanel(new BorderLayout());
-        JPanel fullPanel = new JPanel();
+    private void createGUI(){
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        Container window = getContentPane();
+        window.setLayout(new FlowLayout());
 
-        JPanel canvas = new drawmolecule();
-        fullPanel.setBackground(Color.BLACK);
+        xfield = new JTextField("Typ hier iets");
+        window.add(xfield);
 
-        JButton drawButton = new JButton();
+        yfield = new JTextField("Typ hier iets");
+        window.add(yfield);
 
-        JTextField x_input = new JTextField("x value");
+        button = new JButton("Klik");
+        window.add(button);
+        button.addActionListener(this);
 
-        JTextField y_input = new JTextField("y value");
+        panel = new JPanel(); // init panel
+        panel.setPreferredSize(new Dimension(300,300));
+        panel.setBackground(Color.GRAY);
+        window.add(panel);
+    }
 
-        fullPanel.add(x_input);
-        fullPanel.add(y_input);
-        fullPanel.add(drawButton);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Graphics paper = panel.getGraphics();
+        paper.clearRect(0, 0, 300,300);
 
-        back_panel.add(canvas, BorderLayout.CENTER);
-        back_panel.add(fullPanel, BorderLayout.PAGE_END);
+        String x_val = xfield.getText();
+        String y_val = yfield.getText();
+        int x_coords = Integer.parseInt(x_val);
+        int y_coords = Integer.parseInt(y_val);
+        int sizeH = 13;
+        int sizeO = 20;
 
-        root.setContentPane(back_panel);
-        root.setVisible(true);
+        paper.setColor(Color.BLACK);
+        paper.drawLine(x_coords + 50 + sizeO / 2, y_coords - 50 + sizeO / 2, x_coords + sizeH / 2,
+                y_coords + sizeH / 2);
+        paper.drawLine(x_coords + 50 + sizeO / 2, y_coords + 50 + sizeO / 2, x_coords + sizeH / 2,
+                y_coords + sizeH / 2);
+
+        paper.setColor(Color.BLUE);
+        paper.fillOval(x_coords + 50,y_coords - 50, sizeH, sizeH);
+        paper.fillOval(x_coords + 50,y_coords + 50, sizeH, sizeH);
+
+        paper.setColor(Color.RED);
+        paper.fillOval(x_coords, y_coords, sizeO, sizeO);
     }
 }
