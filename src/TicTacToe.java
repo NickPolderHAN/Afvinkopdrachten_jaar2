@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -13,8 +15,6 @@ public class TicTacToe extends JFrame implements ActionListener {
     JLabel nowplaying = new JLabel("This is filler text!");
 
     ArrayList<JButton> buttonList = new ArrayList<>();
-
-    HashMap<String, String> gameconditions = new HashMap<>();
 
     public static void main(String[] args) {
         TicTacToe root = new TicTacToe();
@@ -28,7 +28,6 @@ public class TicTacToe extends JFrame implements ActionListener {
     public void createGui() {
         Random randint = new Random();
         currentplayer = randint.nextInt(2);
-
         Container window = getContentPane();
 
         JPanel fullfield = new JPanel(new BorderLayout());
@@ -88,10 +87,10 @@ public class TicTacToe extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(null, "Draw!");
         }
         else {
-            check_conditions();
+            save_conditions();
         }
     }
-    public void check_conditions() {
+    public void save_conditions() {
         String[] valuelist = {"", "", "", "", "", "", "", "", ""};
         int button_counter = 0;
 
@@ -100,13 +99,44 @@ public class TicTacToe extends JFrame implements ActionListener {
             button_counter = button_counter + 1;
         }
 
-        String[] line1 = {valuelist[0], valuelist[1], valuelist[2]};
-        String[] line2 = {valuelist[3], valuelist[4], valuelist[5]};
-        String[] line3 = {valuelist[6], valuelist[7], valuelist[8]};
+        String[] horizontalline1 = {valuelist[0], valuelist[1], valuelist[2]};
+        String[] horizontalline2 = {valuelist[3], valuelist[4], valuelist[5]};
+        String[] horizontalline3 = {valuelist[6], valuelist[7], valuelist[8]};
 
-        gameconditions
+        String[] verticalline1 = {valuelist[0], valuelist[3], valuelist[6]};
+        String[] verticalline2 = {valuelist[1], valuelist[4], valuelist[7]};
+        String[] verticalline3 = {valuelist[2], valuelist[5], valuelist[8]};
 
-        if (line1[]
+        String[] diagonalline1 = {valuelist[0], valuelist[4], valuelist[8]};
+        String[] diagonalline2 = {valuelist[2], valuelist[4], valuelist[6]};
+
+        //Checks for a horizontal win.//
+        check_conditions(horizontalline1);
+        check_conditions(horizontalline2);
+        check_conditions(horizontalline3);
+
+        //Checks for a vertical win.//
+        check_conditions(verticalline1);
+        check_conditions(verticalline2);
+        check_conditions(verticalline3);
+
+        //Checks for a diagonal win.//
+        check_conditions(diagonalline1);
+        check_conditions(diagonalline2);
+    }
+
+    public void check_conditions(String[]condition_array) {
+        String[] x_win = {"X", "X", "X"};
+        String[] o_win = {"O", "O", "O"};
+
+        if (Arrays.equals(condition_array, x_win)) {
+            JOptionPane.showMessageDialog(null, "X wins!");
+            reset_game();
+        }
+        else if (Arrays.equals(condition_array, o_win)) {
+            JOptionPane.showMessageDialog(null, "O wins!");
+            reset_game();
+        }
     }
 
     public void reset_game() {
