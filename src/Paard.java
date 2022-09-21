@@ -61,9 +61,9 @@ public class Paard {
      * Verhoog de x met een waarde tussen 0 en 11
      */
     public void loop() {
-        pauzeer(600);
+        pauzeer(300);
         this.x = this.x + random.nextInt(11);
-        System.out.println(this.naam + " is op positie " +this.x);
+        // System.out.println(this.naam + " is op positie " +this.x); //
     }
 
     /** Pauzeer gedurende x millisecondes*/
